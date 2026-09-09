@@ -1,0 +1,23 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Contient les clés du projet Supabase — ne jamais committer.
+.env
+.env.*
+!.env.example
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.log
+npm-debug.log*
+
+.vercel
+.env*
+
+# Ré-autorisé après le `.env*` ajouté par le CLI Vercel : en gitignore la
+# dernière règle l'emporte, et le modèle doit rester versionné.
+!.env.example

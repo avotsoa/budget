@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gestion de budget en couple : revenus, dépenses, factures, épargne et investissements." />
+    <title>Budget Couple</title>
+
+    <!-- Couleur de la barre système, accordée au thème actif du téléphone. -->
+    <meta name="theme-color" content="#fdf7e4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#04211d" media="(prefers-color-scheme: dark)" />
+
+    <!-- iOS ignore le manifeste : l'icône et le mode plein écran passent par
+         ces balises propriétaires. -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Budget" />
+    <script>
+      // `beforeinstallprompt` se déclenche souvent avant que React ne soit
+      // monté : l'événement est capté ici et conservé, sinon la seule occasion
+      // de proposer l'installation serait perdue.
+      window.__installPromptEvent = null;
+      window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault();
+        window.__installPromptEvent = event;
+        window.dispatchEvent(new Event('pwa:installable'));
+      });
+      window.addEventListener('appinstalled', function () {
+        window.__installPromptEvent = null;
+        window.dispatchEvent(new Event('pwa:installed'));
+      });
+    </script>
+    <script>
+      // Applique le thème avant le premier rendu pour éviter le flash de couleur.
+      (function () {
+        try {
+          var stored = localStorage.getItem('budget-couple:theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored === 'dark' || (stored !== 'light' && prefersDark);
+          document.documentElement.classList.toggle('dark', isDark);
+        } catch (_) {
+          /* localStorage indisponible : on garde le thème clair */
+        }
+      })();
+    </script>
+  </head>
+  <body class="h-full">
+    <div id="root" class="h-full"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

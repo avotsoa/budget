@@ -1,0 +1,54 @@
+CONTENU CORRECT POUR REMPLACER LA CARTE "CINEMA"
+==================================================
+
+Titre
+-----
+Budget Couple
+
+Sous-titre
+----------
+Projet personnel
+(à changer : ce n'est pas un projet client, c'est une appli perso développée en solo)
+
+Description
+-----------
+Application web de gestion de budget pour un couple : chaque partenaire dispose de son propre
+compte et de ses données privées, tout en partageant un espace commun dont les modifications se
+reflètent chez l'autre en temps réel. Interface 100 % en français, thème clair/sombre, responsive.
+
+Ce que j'ai réalisé
+--------------------
+- Modélisation des données et sécurité au niveau base (Postgres RLS) pour séparer strictement
+  les données privées de chaque partenaire des données partagées du foyer.
+- Synchronisation en temps réel entre les deux comptes via Supabase Realtime (aucun rechargement
+  nécessaire).
+- Logique financière complète : revenus, dépenses, factures, épargne, investissements, budgets
+  par catégorie, alertes automatiques (dépassement de budget, facture en retard, etc.).
+- Interface React/TypeScript avec formulaires validés (react-hook-form + zod), graphiques
+  (Recharts) et thème clair/sombre.
+- 61 tests unitaires sur toute la logique de calcul financier.
+
+Ce que j'en retire
+--------------------
+Concevoir un modèle de permissions fiable sans backend applicatif : la sécurité repose entièrement
+sur les policies PostgreSQL (RLS), ce qui oblige à raisonner "base de données d'abord" plutôt qu'à
+filtrer côté client.
+
+Tags / technologies
+--------------------
+React
+TypeScript
+Supabase
+Tailwind CSS
+
+Bouton
+------
+Pas de dépôt GitHub public pour l'instant (le dossier local n'est pas un dépôt git) :
+soit retirer le bouton "Voir le dépôt GitHub", soit le remplacer par un lien de démo si
+l'application est déployée quelque part (ex. Vercel).
+
+==================================================
+NOTE : ces informations viennent du package.json et du README.md du projet
+(c:\Users\msimi\Desktop\BOSY\budget). Aucune trace d'un projet "Cinema" n'existe dans ce
+dossier — la carte affichée dans la capture d'écran vient probablement d'un autre site/portfolio
+et affichait un texte générique/placeholder à remplacer par ce qui précède.

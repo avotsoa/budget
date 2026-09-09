@@ -1,0 +1,223 @@
+@import 'tailwindcss';
+
+/* Le thème sombre est piloté par la classe `.dark` posée sur <html>
+   (script inline dans index.html + ThemeContext). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Tokens bruts. Une seule source de vérité, redéfinie en mode sombre.
+   Palette de référence data-viz, validée (voir README § Accessibilité).
+   --------------------------------------------------------------------------- */
+/* Palette de marque : Butter #ffefb3 · Green #013e37.
+   Clair = vert sur beurre. Sombre = beurre sur vert. Les deux thèmes sont
+   la même paire inversée, pas deux palettes distinctes. */
+:root {
+  color-scheme: light;
+
+  /* Surfaces — lavis de beurre, du plus profond au plus clair.
+     Le beurre pur est réservé aux accents : en aplat sur toute la page il
+     écraserait les cartes, qui ont besoin de ressortir. */
+  --plane: #fdf7e4;
+  --surface: #fffcf2;
+  --surface-2: #f8efd3;
+  --surface-3: #f2e6bf;
+
+  /* Encre — le vert de marque sert de noir : plus doux qu'un vrai noir sur
+     fond chaud, et suffisamment contrasté (≈ 12:1 sur --surface). */
+  --ink: #013e37;
+  --ink-2: #3c5f59;
+  --ink-muted: #6f8b85;
+
+  /* Traits */
+  --line: rgb(1 62 55 / 0.14);
+  --line-strong: #cfc49a;
+  --grid: #e8ddbb;
+
+  /* Marque */
+  --brand: #013e37;
+  --brand-hover: #02564b;
+  --brand-soft: #ffefb3;
+  --brand-ink: #ffefb3;
+
+  /* Séries catégorielles — ordre fixe, jamais recyclé.
+     Slot 1 passe au vert de marque ; le vert pur qui occupait le slot 6 cède
+     sa place au bleu, sinon trois verts coexisteraient dans un même camembert
+     et deviendraient indistinguables. */
+  --series-1: #0e5c50;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #2a78d6;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+
+  /* Statuts — réservés, jamais utilisés comme couleur de série */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  /* Encre des variations (texte, doit passer le contraste) */
+  --delta-up: #006300;
+  --delta-down: #c62f2f;
+
+  --shadow-card: 0 1px 2px rgb(1 62 55 / 0.06), 0 1px 3px rgb(1 62 55 / 0.08);
+  --shadow-pop: 0 4px 6px -1px rgb(1 62 55 / 0.1), 0 10px 25px -5px rgb(1 62 55 / 0.16);
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Le vert profond devient le fond, le beurre devient l'encre. */
+  --plane: #04211d;
+  --surface: #0a2f29;
+  --surface-2: #123a33;
+  --surface-3: #1a463e;
+
+  --ink: #ffefb3;
+  --ink-2: #dacfa2;
+  --ink-muted: #9bb0aa;
+
+  --line: rgb(255 239 179 / 0.14);
+  --line-strong: #2e5c53;
+  --grid: #1a463e;
+
+  --brand: #ffefb3;
+  --brand-hover: #fff7d6;
+  --brand-soft: #1e5449;
+  --brand-ink: #013e37;
+
+  /* Mêmes huit teintes, redosées pour la surface sombre — pas une inversion.
+     Le vert du slot 1 doit s'éclaircir : #0e5c50 serait invisible ici. */
+  --series-1: #6fcbb8;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #3987e5;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  --status-good: #35c035;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #e05a5a;
+
+  --delta-up: #35c035;
+  --delta-down: #e66767;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
+  --shadow-pop: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 10px 25px -5px rgb(0 0 0 / 0.5);
+}
+
+/* ---------------------------------------------------------------------------
+   Exposition des tokens à Tailwind. `inline` fait émettre `var(--token)` au
+   lieu de la valeur résolue : c'est ce qui permet la bascule clair/sombre
+   sans dupliquer chaque utilitaire.
+   --------------------------------------------------------------------------- */
+@theme inline {
+  --color-plane: var(--plane);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-muted: var(--ink-muted);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-grid: var(--grid);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-ink: var(--brand-ink);
+
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-series-4: var(--series-4);
+  --color-series-5: var(--series-5);
+  --color-series-6: var(--series-6);
+  --color-series-7: var(--series-7);
+  --color-series-8: var(--series-8);
+
+  --color-good: var(--status-good);
+  --color-warning: var(--status-warning);
+  --color-serious: var(--status-serious);
+  --color-critical: var(--status-critical);
+
+  --color-delta-up: var(--delta-up);
+  --color-delta-down: var(--delta-down);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--plane);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Les colonnes chiffrées doivent s'aligner verticalement ; les grands
+     nombres isolés (KPI) gardent les chiffres proportionnels. */
+  th[data-numeric],
+  td[data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--brand-soft);
+  }
+}
+
+@layer utilities {
+  /* Barre de défilement discrète, cohérente dans les deux thèmes. */
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+
+/* Téléphone en paysage : la hauteur devient la ressource rare — un écran de
+   360 px perdrait un cinquième de sa surface dans les barres. On récupère ce
+   qu'on peut sur l'en-tête et les marges, sans toucher au reste. */
+@media (orientation: landscape) and (max-height: 500px) {
+  [data-app-header] > div {
+    height: 3rem;
+  }
+
+  [data-app-main] {
+    padding-block: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
